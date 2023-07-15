@@ -1,0 +1,1 @@
+- Клонируем https://github.com/gorodetskiykp/python-sat-19-00.git 

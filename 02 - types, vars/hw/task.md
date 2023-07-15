@@ -1,6 +1,9 @@
-Создать форк https://github.com/gorodetskiykp/python-sat-19-00.git\
-Склонировать локально\
-Выполнить ДЗ python в файле hw/TG-name.py\
+Создать форк https://github.com/gorodetskiykp/python-sat-19-00.git
+
+Склонировать локально
+
+Выполнить ДЗ python в файле hw/TG-name.py
+
 Запушить в свой репозиторий
 
 Выбрать любую фразу ниже (забронировать задание - сообщить номер в чате группы)
