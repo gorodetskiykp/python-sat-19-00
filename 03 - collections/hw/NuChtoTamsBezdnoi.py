@@ -18,18 +18,21 @@ i = 0
 
 print("                    АТОЛ                    \n",
       "", shop_name, "\n"
-      "                ", date, "\n")
+                     "                ", date, "\n")
 
 while i < len(shop_list):
     # Проверяем количество единиц товара, чтобы указать шт. или кг.
     if type(price_list[i][0]) == float:
-        print(shop_list[i], "-", price_list[i][0],"кг.",
-            "\n........................................", price_list[i][0]*price_list[i][1])
+        print(shop_list[i], "-", price_list[i][0], "кг.",
+              "\n........................................",
+              price_list[i][0]*price_list[i][1])
     elif type(price_list[i][0]) == int:
-        print(shop_list[i], "-", price_list[i][0],"шт.",
-            "\n........................................", format(price_list[i][0]*price_list[i][1],".2f"))
-    summary = summary + price_list[i][0] * price_list[i][1]  # сразу считаем итоговую сумму
-    i=i+1
+        print(shop_list[i], "-", price_list[i][0], "шт.",
+              "\n........................................",
+              format(price_list[i][0] * price_list[i][1], ".2f"))
+    # сразу считаем итоговую сумму
+    summary = summary + price_list[i][0] * price_list[i][1]
+    i = i + 1
 
 print("\nИТОГО .................................", summary, "\n"
       "\n Кассир: Крутой Уокер"
