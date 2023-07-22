@@ -31,5 +31,7 @@ print(
     name[2], ',', quantity[2], ',', price[2], ',', quantity[2]*price[2], '\n',
     '\n',
     'Всего наименований:', len(name), 'шт.', '\n',
-    'Итого, общая сумма счета:', (quantity[0]*price[0])+(quantity[1]*price[1])+(quantity[2]*price[2]), 'руб.' '\n',
+    'Итого, общая сумма счета:',
+    (quantity[0]*price[0])+(quantity[1]*price[1])+(quantity[2]*price[2]),
+    'руб.' '\n',
 )
