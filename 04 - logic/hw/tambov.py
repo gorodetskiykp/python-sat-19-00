@@ -9,10 +9,10 @@ print(number)
 if sum(number) == 21:
     print(sum(number), 'Вы выиграли!')
 elif sum(number) == 22:
-    print(sum(number), 'Вы проиграли!')
+    print(sum(number), 'Вы проиграли')
 elif sum(number) < 21:
-    choice = int(input("Сделайте свой выбор: "))
-    if choice == 1:
+    choice = input("Сделайте свой выбор, y/n: ")
+    if choice == 'y':
         number_3 = randint(2, 11)
         print(number_3)
         number.append(number_3)
@@ -22,12 +22,14 @@ elif sum(number) < 21:
             number.remove(11)
             number.append(1)
             if sum(number) == 21:
-                print(sum(number), 'Произошла замена 11, Вы выиграли!')
+                print(sum(number), 'Произошла замена 11, вы выиграли!')
             else:
-                print(sum(number), 'Произошла замена 11, Вы не проиграли')
+                print(sum(number), 'Произошла замена 11, вы не проиграли')
         elif sum(number) < 21:
             print(sum(number), 'Вы не проиграли')
         else:
-            print(sum(number), 'Вы проиграли')
+            print(sum(number), 'Вы проиграли!')
     else:
         print(sum(number), 'Вы не проиграли')
+else:
+    print(sum(number), 'Вы не проиграли')
