@@ -9,6 +9,12 @@ choice = input("Нужна ли тебе карта?\nСкажи Yes или No: 
 
 if choice == "Yes":
     print(f"Ты получил еще карту {number3}")
+    if number1 == 11:
+        number1 = 1
+    if number2 == 11:
+        number2 = 1
+    if number3 == 11:
+        number3 = 1
     total_sum = sum([number1, number2, number3])
     print(f"Теперь у тебя {total_sum}")
     if total_sum < 21:
@@ -28,4 +34,3 @@ elif choice == "No":
         print("Вы проиграли")
 else:
     print("Ты ввел неверные входные данные, попробуй снова!")
-# Я не понял задание "Если на руках 3 карты, номинал 11 заменить на номинал 1"
