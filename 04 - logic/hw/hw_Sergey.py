@@ -11,7 +11,6 @@ print("Ваши карты:", list_cards, "Счет:", check_card)
 
 if check_card == 21:
     print("ВЫ ВЫЙГРАЛИ!")
-    print("Ваши карты:", list_cards, "Счет:", check_card)
 elif check_card > 21:
     print("ВЫ ПРОИГРАЛИ!")
 else:
