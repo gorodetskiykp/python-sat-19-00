@@ -4,7 +4,7 @@ from random import randint
 
 def rand():  # Исправил повторы, загнал под функцию
     a = randint(2, 11)
-    if a == 11 and sum(hand) > 21:
+    if a == 11 and (sum(hand)+11) > 21:
         a = 1
     return a
 
