@@ -19,9 +19,8 @@ else:
         new_card = randint(2, 11)
         list_cards.append(new_card)
         for nominal in range(len(list_cards) - 1):
-            if nominal == 11:
-                list_cards.remove(nominal)
-                list_cards.append(1)
+            if list_cards[nominal] == 11:
+                list_cards[nominal] = 1
                 if check_card == 21:
                     print("ВЫ ВЫЙГРАЛИ!")
                     print("Ваши карты:", list_cards, "Счет:", check_card)
