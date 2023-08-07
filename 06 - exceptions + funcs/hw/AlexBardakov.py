@@ -35,7 +35,7 @@ def check_num(number):
 while True:
     printer = []
     try:
-        current_number = list(map(int, input()))
+        current_number = list(map(int, input("Введите число:")))
         for process in range(5):
             for i in range(len(current_number)):
                 one = check_num(current_number[i])
