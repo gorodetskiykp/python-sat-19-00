@@ -20,7 +20,8 @@ def star_line():  # создаем единый список символов в
 
 
 def star_list():  # делим список по длине введеного числа
-    draw_list = (star_line()[i:i + 5] for i in range(0, len(star_line()), 5))
+    n = len(current_number)
+    draw_list = (star_line()[i:i + n] for i in range(0, len(star_line()), n))
     return list(draw_list)
 
 
