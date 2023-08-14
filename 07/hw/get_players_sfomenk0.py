@@ -1,21 +1,17 @@
-"""
-    Принимает количество игроков,
-    спрашивает у пользователя имя каждого игрока.
-    Проверяем имя в черном списке.
-    Возвращает список имен
-    """
 
 
-def get_players(players_count: int):
-    name_players = []
-    for _ in range(players_count):
+def get_players(players_count: int):  # Принимает кол-во игроков
+    name_players = []  # Список для имен игроков
+    count = 0
+    while count != players_count:  # цикл для добавления имен и проверки в черном списке
         name_gamer = input('Enter your name:')
-        if name_gamer in black_list:
+        if name_gamer in black_list:  # Проверяем имя в черном списке.
             print('You\'re denied the game')
         else:
             name_players.append(name_gamer)
-    return list(name_players)
+            count += 1
+    return name_players  # Возвращает список имен
 
 
-black_list = []
-print(get_players(players_count=5))
+black_list = ['Oksana', 'Tanya', 'Max']
+print(get_players(players_count=6))
