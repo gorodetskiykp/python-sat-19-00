@@ -1,3 +1,6 @@
+from players import get_players
+
+
 def random_cards() -> list:
     """
     Вернуть перемешанную кололду
@@ -23,5 +26,9 @@ def get_cards_for_players(players_names: list) -> list:
         ['player1', [карты на руках]],
     ]
     """
-    stack = random_cards() # получить первоначальную колоду
-    get_random_cards() # получить на руки определенное количество карт
+    hands_list = []
+    stack = random_cards()  # получить первоначальную колоду
+    for name in players_names:
+        cards_for_player = [players_names[name], [get_random_cards(stack, 6)]]
+        hands_list.append(cards_for_player)
+    return hands_list
