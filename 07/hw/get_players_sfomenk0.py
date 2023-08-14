@@ -14,4 +14,4 @@ def get_players(players_count: int):  # Принимает кол-во игро�
 
 
 black_list = ['Oksana', 'Tanya', 'Max']
-print(get_players(players_count=6))
+
