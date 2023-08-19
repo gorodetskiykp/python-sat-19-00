@@ -23,3 +23,7 @@ def game():
     players_names = get_players(players_count)
     players_cards = get_cards_for_players(players_names)
     view_cards(players_cards)
+
+
+if __name__ == '__main__':
+    game()
