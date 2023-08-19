@@ -49,4 +49,3 @@ def get_cards_for_players(players_names: list) -> list:
         for card in temporary:
             stack.remove(temporary[card])
     return hands_list
-
