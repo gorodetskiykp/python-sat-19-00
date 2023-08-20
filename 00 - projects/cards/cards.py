@@ -1,7 +1,6 @@
-from random import choice, shuffle, randint
+from random import choice, randint, shuffle
 
-from config import cards, marks, CARDS_LIMIT
-from players import get_players
+from config import cards, CARDS_LIMIT, marks
 
 
 def get_stack() -> list:
@@ -38,7 +37,7 @@ def get_cards_for_players(stack: list, players: list) -> list:
     ]
     """
     hands_list = []
-    for name, player_cards in players:  #
+    for name, player_cards in players:
         need_cards = max(0, CARDS_LIMIT - len(player_cards))
         temporary = get_random_cards(stack, need_cards)
         cards_for_player = [name, temporary + player_cards]

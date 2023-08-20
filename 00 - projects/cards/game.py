@@ -1,6 +1,7 @@
-from players import get_players
-from cards import get_cards_for_players
 from random import randint
+
+from cards import get_cards_for_players, get_stack
+from players import get_players
 
 
 def view_cards(players):
@@ -20,9 +21,11 @@ def view_cards(players):
 
 def game():
     players_count = int(input("Укажите количество игроков: "))
-    players_names = get_players(players_count)
-    players_cards = get_cards_for_players(players_names)
-    view_cards(players_cards)
+    players = get_players(players_count)
+    view_cards(players)
+    stack = get_stack()
+    players = get_cards_for_players(stack, players)
+    view_cards(players)
 
 
 if __name__ == '__main__':
