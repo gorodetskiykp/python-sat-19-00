@@ -22,10 +22,10 @@ def view_cards(players):
 def game():
     players_count = int(input("Укажите количество игроков: "))
     players = get_players(players_count)
-    view_cards(players)
     stack = get_stack()
     players = get_cards_for_players(stack, players)
     view_cards(players)
+
 
 
 if __name__ == '__main__':
