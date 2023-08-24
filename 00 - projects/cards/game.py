@@ -15,7 +15,7 @@ def view_cards(players):
     player_no = 1
     for player, player_cards in players:
         print('Игрок', player_no, '-', player,
-              '\nКарты в руке:', *player_cards, '\n')
+              'Карты в руке:', sorted(*player_cards), '\n')
         player_no += 1
 
 
