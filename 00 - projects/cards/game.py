@@ -1,7 +1,12 @@
 from random import randint
 
-from cards import get_cards_for_players, get_stack, get_trump_card
-from players import get_players
+from cards import (
+    get_cards_for_players,
+    get_minimal_card,
+    get_stack,
+    get_trump_card
+)
+from players import get_players, move
 
 
 def view_cards(players):
@@ -9,6 +14,7 @@ def view_cards(players):
     Вход:
     [
         ['player1', [карты на руках]],
+        ['player2', [карты на руках]],
     ]
     Вывести на экран красиво
     """
@@ -35,7 +41,11 @@ def game():
         trump = players[-1][-1][-1][-1]
     view_cards(players)
     print('Козырь:', trump)
-
+    first_move = 0
+    next_card = get_minimal_card(players[first_move][-1], trump)
+    card_on_desk = move(players[first_move][-1], next_card)
+    print('Карта на столе:', card_on_desk)
+    view_cards(players)
 
 if __name__ == '__main__':
     game()
