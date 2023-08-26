@@ -1,6 +1,7 @@
 from config import black_list
 from random import randint
 
+
 def get_players(players_count: int) -> list:
     players = []
     players_names = []
@@ -29,18 +30,16 @@ def first_move(players: list, tramp_mark: str) -> int:
     """
     tramp_cards = []
     random_start = randint(1, 4)
-    for index in players:
+    start_player_num = 0
+    for index in range(len(players)):
         for card in players[index][1]:
             if tramp_mark in card:
-                tramp_cards.append(players[index][1])
-        index += 1
+                tramp_cards.append(card)
     if len(tramp_cards) > 0:
-        sorted(tramp_cards)
-        for digit in players:
-            if tramp_cards[1] in players[digit]:
-                start_player_num = digit+1
-            else:
-                digit += 1
+        tramp_cards = sorted(tramp_cards)
+        for digit in range(len(players)):
+            if tramp_cards[0] in players[digit][1]:
+                start_player_num = digit + 1
     else:
         start_player_num = random_start
     return start_player_num
