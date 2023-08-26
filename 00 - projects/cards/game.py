@@ -1,6 +1,6 @@
 from random import randint
 
-from cards import get_cards_for_players, get_stack
+from cards import get_cards_for_players, get_stack, get_trump_card
 from players import get_players
 
 
@@ -20,12 +20,21 @@ def view_cards(players):
 
 
 def game():
-    players_count = int(input("Укажите количество игроков: "))
+    while True:
+        players_count = input('Сколько будет игроков? ')
+        if (players_count.isdigit()
+                and 2 <= (players_count := int(players_count)) <= 4):
+            break
+        print('Может быть только от 2 до 4 игроков')
+
     players = get_players(players_count)
     stack = get_stack()
     players = get_cards_for_players(stack, players)
+    trump = get_trump_card(stack)
+    if not trump:
+        trump = players[-1][-1][-1][-1]
     view_cards(players)
-
+    print('Козырь:', trump)
 
 
 if __name__ == '__main__':
