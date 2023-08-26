@@ -22,11 +22,11 @@ def view_cards(players):
 def game():
     while True:
         try:
-            players_count = int(input('Укажите кол-во игроков(от 2 до 4):'))
+            players_count = int(input('Сколько будет игроков?'))
         except ValueError:
-            print('Обязательно нужно ввести число от 2 до 4')
+            print('Обязательно нужно ввести число')
             continue
-        if players_count in range(2, 4):
+        if players_count in range(2, 5):
             break
         else:
             print('Может быть только от 2 до 4 игроков')
