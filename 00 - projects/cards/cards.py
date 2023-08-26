@@ -45,7 +45,7 @@ def get_cards_for_players(stack: list, players: list) -> list:
     return hands_list
 
 
-def get_trump_card(stack: list) -> str:
+def get_trump_card(stack: list):
     """Определить козырь.
     Козырь положить под низ колоды
 
@@ -53,10 +53,14 @@ def get_trump_card(stack: list) -> str:
         stack - список оставшихся после раздачи карт
     Возвращаемое значение:
         Значение масти
+
+    Козырь определяется по последней карте в перемешанной колоде
+    В случае пустой колоды - None
     """
-    last_card = stack[-1]
-    trump_mark = last_card[-1]
-    return trump_mark
+    if len(stack) > 0:
+        return stack[-1][-1]
+    else:
+        return None
 
 
 def get_minimal_card(hand: list, tramp_mark: str) -> str:
