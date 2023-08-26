@@ -17,7 +17,7 @@ def get_players(players_count: int) -> list:
     return players
 
 
-def first_move(players: list, tramp_mark: str) -> int:
+def first_move(players: list, trump_mark: str) -> int:
     """Определить игрока, который начнёт игру.
     Нужно проверить карты игроков и найти минимальный козырь
     Если ни у кого нет козырей, ходит игрок № 0
@@ -28,14 +28,14 @@ def first_move(players: list, tramp_mark: str) -> int:
                 ['p1', ['k1', 'k2', ...]],
                 ['p2', ['k1', 'k2', ...]],
             ]
-        tramp_mark - строчное значение козырной масти
+        trump_mark - строчное значение козырной масти
     Возвращаемое значение:
         Порядковый номер игрока, который начинает игру
     """
     tramp_cards = []
     for _, cards in players:
         for card in cards:
-            if tramp_mark in card:
+            if trump_mark in card:
                 tramp_cards.append(card)
     player_no = 0
     if tramp_cards:
