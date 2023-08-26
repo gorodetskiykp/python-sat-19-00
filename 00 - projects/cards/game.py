@@ -13,7 +13,7 @@ def view_cards(players):
     Вывести на экран красиво
     """
     for player, player_cards in players:
-        print(player, '-', *sorted(player_cards), '\n')
+        print(player, '-', *sorted(player_cards))
 
 
 def game():

@@ -20,29 +20,31 @@ def get_players(players_count: int) -> list:
 def first_move(players: list, tramp_mark: str) -> int:
     """Определить игрока, который начнёт игру.
     Нужно проверить карты игроков и найти минимальный козырь
+    Если ни у кого нет козырей, ходит игрок № 0
 
     Аргументы:
         players - список игроков и из карт
-            [['p1', ['k1', 'k2', ...]], ['p2', ['k1', 'k2', ...]]]
+            [
+                ['p1', ['k1', 'k2', ...]],
+                ['p2', ['k1', 'k2', ...]],
+            ]
         tramp_mark - строчное значение козырной масти
     Возвращаемое значение:
         Порядковый номер игрока, который начинает игру
     """
     tramp_cards = []
-    random_start = randint(1, 4)
-    start_player_num = 0
-    for index in range(len(players)):
-        for card in players[index][1]:
+    for _, cards in players:
+        for card in cards:
             if tramp_mark in card:
                 tramp_cards.append(card)
-    if len(tramp_cards) > 0:
-        tramp_cards = sorted(tramp_cards)
-        for digit in range(len(players)):
-            if tramp_cards[0] in players[digit][1]:
-                start_player_num = digit + 1
-    else:
-        start_player_num = random_start
-    return start_player_num
+    player_no = 0
+    if tramp_cards:
+        min_tramp_card = sorted(tramp_cards)[0]
+        for _, cards in players:
+            if min_tramp_card in cards:
+                return player_no
+            player_no += 1
+    return 0
 
 
 def move(hand: list, card: list):
