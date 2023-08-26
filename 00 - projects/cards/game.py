@@ -20,7 +20,17 @@ def view_cards(players):
 
 
 def game():
-    players_count = int(input("Укажите количество игроков: "))
+    while True:
+        try:
+            players_count = int(input('Укажите кол-во игроков(от 2 до 4):'))
+        except ValueError:
+            print('Обязательно нужно ввести число от 2 до 4')
+            continue
+        if players_count in range(2, 4):
+            break
+        else:
+            print('Может быть только от 2 до 4 игроков')
+            continue
     players = get_players(players_count)
     stack = get_stack()
     players = get_cards_for_players(stack, players)
