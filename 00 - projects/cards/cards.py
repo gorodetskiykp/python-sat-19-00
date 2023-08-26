@@ -56,13 +56,17 @@ def get_trump_card(stack: list) -> str:
     """
 
 
-def get_minimal_card(hand: list, tramp_mark: str) -> str:
+def get_minimal_card(hand: list, trump_mark: str) -> str:
     """Определить минимальную не козырную карту у игрока.
 
     Аргументы:
         hand - список карт у игрока
-        tramp_mark - строчное значение козырной масти
+        trump_mark - строчное значение козырной масти
     Возвращаемое значение:
         Строчное значение карты
     """
-
+    new_hand = []
+    for card in hand:
+        if trump_mark not in card:
+            new_hand.append(card)
+    return min(new_hand)
