@@ -29,7 +29,7 @@ def first_move(players: list, tramp_mark: str) -> int:
     """
 
 
-def move(hand: list, card: list):
+def move(hand: list, card: str):
     """Убрать карту из карт игрока.
 
     Аргументы:
@@ -38,3 +38,5 @@ def move(hand: list, card: list):
     Возвращаемое значение:
         Строчное значение карты
     """
+    hand.remove(card)
+    return card
