@@ -54,6 +54,9 @@ def get_trump_card(stack: list) -> str:
     Возвращаемое значение:
         Значение масти
     """
+    last_card = stack[-1]
+    trump_mark = last_card[-1]
+    return trump_mark
 
 
 def get_minimal_card(hand: list, tramp_mark: str) -> str:
@@ -65,4 +68,3 @@ def get_minimal_card(hand: list, tramp_mark: str) -> str:
     Возвращаемое значение:
         Строчное значение карты
     """
-
