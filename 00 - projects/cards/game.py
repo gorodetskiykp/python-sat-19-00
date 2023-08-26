@@ -6,7 +6,7 @@ from cards import (
     get_stack,
     get_trump_card
 )
-from players import get_players, move
+from players import first_move, get_players, move
 
 
 def view_cards(players):
@@ -38,9 +38,10 @@ def game():
         trump = players[-1][-1][-1][-1]
     view_cards(players)
     print('Козырь:', trump)
-    first_move = 0
-    next_card = get_minimal_card(players[first_move][-1], trump)
-    card_on_desk = move(players[first_move][-1], next_card)
+    next_move = first_move(players, trump)
+    print('Игру начинает', players[next_move][0])
+    next_card = get_minimal_card(players[next_move][-1], trump)
+    card_on_desk = move(players[next_move][-1], next_card)
     print('Карта на столе:', card_on_desk)
     view_cards(players)
 
