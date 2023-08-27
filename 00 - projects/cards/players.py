@@ -1,5 +1,7 @@
-from config import black_list
 from random import randint
+
+from config import black_list
+from cards import get_minimal_card
 
 
 def get_players(players_count: int) -> list:
@@ -41,7 +43,7 @@ def first_move(players: list, trump_mark: str) -> int:
                 tramp_cards.append(card)
     player_no = 0
     if tramp_cards:
-        min_tramp_card = sorted(tramp_cards)[0]
+        min_tramp_card = get_minimal_card(tramp_cards)
         for _, cards in players:
             if min_tramp_card in cards:
                 return player_no

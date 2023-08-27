@@ -60,7 +60,7 @@ def get_trump_card(stack: list):
     return None
 
 
-def get_minimal_card(hand: list, trump_mark: str) -> str:
+def get_minimal_card(hand: list, trump_mark: str = None) -> str:
     """Определить минимальную не козырную карту у игрока.
 
     Аргументы:
@@ -69,8 +69,24 @@ def get_minimal_card(hand: list, trump_mark: str) -> str:
     Возвращаемое значение:
         Строчное значение карты
     """
+    if not hand:
+        return None
     new_hand = []
     for card in hand:
-        if trump_mark not in card:
-            new_hand.append(card)
-    return min(new_hand)
+        if trump_mark and trump_mark in card:
+            continue
+        new_hand.append(card)
+    new_hand = sorted_cards(new_hand)
+    return new_hand[0]
+
+
+def sorted_cards(unsorted: list) -> list:
+    weights = []
+    for card in unsorted:
+        weights.append(
+            (
+                cards.index(card[:-1]),
+                card,
+            )
+        )
+    return [card for _, card in sorted(weights)]
