@@ -4,7 +4,8 @@ from cards import (
     get_cards_for_players,
     get_minimal_card,
     get_stack,
-    get_trump_card
+    get_trump_card,
+    sorted_cards,
 )
 from players import first_move, get_players, move
 
@@ -19,7 +20,7 @@ def view_cards(players):
     Вывести на экран красиво
     """
     for player, player_cards in players:
-        print(player, '-', *sorted(player_cards))
+        print(player, '-', *sorted_cards(player_cards))
 
 
 def game():
