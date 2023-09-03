@@ -7,7 +7,7 @@ from cards import (
     get_trump_card,
     sorted_cards,
 )
-from players import first_move, get_players, move
+from players import first_move, get_next_player, get_players, move
 
 
 def view_cards(players):
@@ -40,18 +40,12 @@ def game():
     view_cards(players)
     print('Козырь:', trump)
     next_move = first_move(players, trump)
-
-    attacker_index = next_move
-    defender_index = (attacker_index + 1) % len(players)
-
-    assert len(players) >= 2 and len(players) <= 4
-    assert attacker_index >= 0 and attacker_index < len(players)
-    assert defender_index >= 0 and defender_index < len(players)
-
     print('Игру начинает', players[next_move][0])
     next_card = get_minimal_card(players[next_move][-1], trump)
     card_on_desk = move(players[next_move][-1], next_card)
     print('Карта на столе:', card_on_desk)
+    defender_index = get_next_player(next_move, players_count)
+    print('Защищается', players[defender_index][0])
     view_cards(players)
 
 
