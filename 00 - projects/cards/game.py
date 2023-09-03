@@ -40,11 +40,20 @@ def game():
     view_cards(players)
     print('Козырь:', trump)
     next_move = first_move(players, trump)
+
+    attacker_index = next_move
+    defender_index = (attacker_index + 1) % len(players)
+
+    assert len(players) >= 2 and len(players) <= 4
+    assert attacker_index >= 0 and attacker_index < len(players)
+    assert defender_index >= 0 and defender_index < len(players)
+
     print('Игру начинает', players[next_move][0])
     next_card = get_minimal_card(players[next_move][-1], trump)
     card_on_desk = move(players[next_move][-1], next_card)
     print('Карта на столе:', card_on_desk)
     view_cards(players)
+
 
 if __name__ == '__main__':
     game()
