@@ -51,6 +51,10 @@ def first_move(players: list, trump_mark: str) -> int:
     return 0
 
 
+def get_next_player(current_player_index: int, players_count: int):
+    return (current_player_index + 1) % players_count
+
+
 def move(hand: list, card: str):
     """Убрать карту из карт игрока.
 
