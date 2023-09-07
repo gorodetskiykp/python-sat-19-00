@@ -7,7 +7,7 @@ from cards import (
     get_trump_card,
     sorted_cards,
 )
-from players import first_move, get_players, move
+from players import defence, first_move, get_players, move
 
 
 def view_cards(players):
@@ -42,9 +42,19 @@ def game():
     next_move = first_move(players, trump)
     print('Игру начинает', players[next_move][0])
     next_card = get_minimal_card(players[next_move][-1], trump)
-    card_on_desk = move(players[next_move][-1], next_card)
-    print('Карта на столе:', card_on_desk)
+    defending = 
+    next_card_to_defend = defence(players[next_move][-1], next_card, trump)
+    
+    if next_card_to_defend is not None:
+        print('Игрок', players[next_move][0], 'отбивает картой:', next_card_to_defend)
+        card_on_desk = move(players[next_move][-1], next_card_to_defend)
+        print('Карта на столе:', card_on_desk)
+        view_cards(players)
+    else:
+        print('Игрок', players[next_move][0], 'не может отбить карту')
+    
     view_cards(players)
+
 
 if __name__ == '__main__':
     game()

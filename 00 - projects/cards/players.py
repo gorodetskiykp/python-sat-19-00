@@ -62,3 +62,23 @@ def move(hand: list, card: str):
     """
     hand.remove(card)
     return card
+
+
+def defence(hand, attacking_card, trump_suit):
+    same_suit_cards = []
+    trump_cards = []
+
+    for card in hand:
+        if attacking_card[-1] in card:
+            if trump_suit not in card:
+                same_suit_cards.append(card)
+            else:
+                trump_cards.append(card)
+
+    if same_suit_cards:
+        return min(same_suit_cards)
+
+    if trump_cards:
+        return min(trump_cards)
+
+    return None
