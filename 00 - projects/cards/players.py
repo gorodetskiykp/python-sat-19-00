@@ -1,7 +1,7 @@
 from random import randint
 
-from config import black_list
-from cards import get_minimal_card
+from config import black_list, cards
+from cards import get_minimal_card, sorted_cards
 
 
 def get_players(players_count: int) -> list:
@@ -74,15 +74,13 @@ def defence(hand, attacking_card, trump_suit):
 
     for card in hand:
         if attacking_card[-1] in card:
-            if trump_suit not in card:
-                same_suit_cards.append(card)
-            else:
-                trump_cards.append(card)
-
-    if same_suit_cards:
-        return min(same_suit_cards)
-
+            same_suit_cards.append(card)
+        elif trump_suit in card:  
+            trump_cards.append(card)  
+    for card in sorted_cards(same_suit_cards):
+        if cards.index(card[0]) > cards.index(attacking_card[0]):
+            return card
     if trump_cards:
         return min(trump_cards)
-
+    hand.append(attacking_card)
     return None
