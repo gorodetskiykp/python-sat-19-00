@@ -36,8 +36,6 @@ def game():
     stack = get_stack()
     players = get_cards_for_players(stack, players)
     trump = get_trump_card(stack)
-    if not trump:
-        trump = players[-1][-1][-1][-1]
     view_cards(players)
     print('Козырь:', trump)
     next_move = first_move(players, trump)
