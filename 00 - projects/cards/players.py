@@ -1,7 +1,7 @@
 from random import randint
 
-from config import black_list
-from cards import get_minimal_card
+from config import black_list, cards
+from cards import get_minimal_card, sorted_cards
 
 
 def get_players(players_count: int) -> list:
@@ -51,6 +51,10 @@ def first_move(players: list, trump_mark: str) -> int:
     return 0
 
 
+def get_next_player(current_player_index: int, players_count: int):
+    return (current_player_index + 1) % players_count
+
+
 def move(hand: list, card: str):
     """Убрать карту из карт игрока.
 
@@ -62,3 +66,21 @@ def move(hand: list, card: str):
     """
     hand.remove(card)
     return card
+
+
+def defence(hand, attacking_card, trump_suit):
+    same_suit_cards = []
+    trump_cards = []
+
+    for card in hand:
+        if attacking_card[-1] in card:
+            same_suit_cards.append(card)
+        elif trump_suit in card:  
+            trump_cards.append(card)  
+    for card in sorted_cards(same_suit_cards):
+        if cards.index(card[0]) > cards.index(attacking_card[0]):
+            return card
+    if trump_cards:
+        return min(trump_cards)
+    hand.append(attacking_card)
+    return None
