@@ -1,3 +1,5 @@
+"""Основной модуль игры."""
+
 from random import randint
 
 from cards import (
@@ -11,20 +13,24 @@ from cards import (
 from players import defence, first_move, get_next_player, get_players, move
 
 
-def view_cards(players):
-    """
-    Вход:
-    [
-        ['player1', [карты на руках]],
-        ['player2', [карты на руках]],
-    ]
-    Вывести на экран красиво
+def view_cards(players) -> None:
+    """Напечатать карты игроков (вывести на экран красиво).
+
+    Args:
+        players: список игроков
+            [
+                ['player1', [карты на руках]],
+                ['player2', [карты на руках]],
+            ]
+    Returns:
+        None
     """
     for player, player_cards in players:
         print(player, '-', *sorted_cards(player_cards))
 
 
 def game():
+    """Играть в карты."""
     while True:
         players_count = input('Сколько будет игроков? ')
         if (players_count.isdigit()
