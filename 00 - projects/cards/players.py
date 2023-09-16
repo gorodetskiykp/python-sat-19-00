@@ -1,4 +1,6 @@
-from random import randint
+"""Обработка игроков."""
+
+from typing import Optional
 
 from config import black_list, cards
 from cards import get_minimal_card, sorted_cards
@@ -52,6 +54,7 @@ def first_move(players: list, trump_mark: str) -> int:
 
 
 def get_next_player(current_player_index: int, players_count: int):
+    """Определить индекс следующего игрока."""
     return (current_player_index + 1) % players_count
 
 
@@ -68,18 +71,31 @@ def move(hand: list, card: str):
     return card
 
 
-def defence(hand, attacking_card, trump_suit):
+def defence(hand: list, attacking_card: str, trump_suit: str) -> Optional[str]:
+    """Определить карту для защиты.
+
+    Args:
+        hand: list
+            список карт на руках у защищающегося игрока.
+        attacking_card: str
+            карта на столе, которую нужно отбить.
+        trump_suit: str
+            козырная масть.
+    Returns:
+        - Карту, которой можно отбить
+        - None, если отбить нечем
+    """
     same_suit_cards = []
     trump_cards = []
 
-    for card in hand:
-        if attacking_card[-1] in card:
-            same_suit_cards.append(card)
-        elif trump_suit in card:  
-            trump_cards.append(card)  
-    for card in sorted_cards(same_suit_cards):
-        if cards.index(card[0]) > cards.index(attacking_card[0]):
-            return card
+    for hand_card in hand:
+        if attacking_card[-1] in hand_card:
+            same_suit_cards.append(hand_card)
+        elif trump_suit in hand_card:
+            trump_cards.append(hand_card)
+    for defence_card in sorted_cards(same_suit_cards):
+        if cards.index(defence_card[0]) > cards.index(attacking_card[0]):
+            return defence_card
     if trump_cards:
         return min(trump_cards)
     hand.append(attacking_card)

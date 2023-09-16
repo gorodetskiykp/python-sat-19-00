@@ -1,12 +1,13 @@
+"""Обработка колоды / карт."""
+
 from random import choice, randint, shuffle
+from typing import Optional
 
 from config import cards, CARDS_LIMIT, marks
 
 
 def get_stack() -> list:
-    """
-    Вернуть перемешанную колоду
-    """
+    """Вернуть перемешанную колоду."""
     stack = []
     for card in cards:
         for mark in marks:
@@ -16,10 +17,7 @@ def get_stack() -> list:
 
 
 def get_random_cards(stack: list, count: int) -> list:
-    """
-    Принимает оставшуюся колоду
-    Возвращает указанное количество карт
-    """
+    """Вернуть указанное количество карт из колоды."""
     hand = []
     for _ in range(count):
         card = choice(stack)
@@ -29,7 +27,8 @@ def get_random_cards(stack: list, count: int) -> list:
 
 
 def get_cards_for_players(stack: list, players: list) -> list:
-    """
+    """Раздать карты игрокам.
+
     Получает список имен игроков
     Возвращает список списков (по 6 карт)
     [
@@ -47,6 +46,7 @@ def get_cards_for_players(stack: list, players: list) -> list:
 
 def get_trump_card(stack: list, players: list) -> str:
     """Определить козырь.
+
     Козырь определяется по последней карте в колоде
     В случае пустой колоды берем последнюю карту последнего игрока
     Пример масти - ♥
@@ -61,14 +61,17 @@ def get_trump_card(stack: list, players: list) -> str:
     return players[-1][-1][-1][-1]
 
 
-def get_minimal_card(hand: list, trump_mark: str = None) -> str:
-    """Определить минимальную не козырную карту у игрока.
+def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
+    """Определить минимальную карту у игрока.
+    Сначала смотрим не козырные карты, если таких нет -
+    отдаём минимальный козырь.
 
     Аргументы:
         hand - список карт у игрока
         trump_mark - строчное значение козырной масти
     Возвращаемое значение:
         Строчное значение карты
+        None
     """
     if not hand:
         return None
@@ -77,11 +80,15 @@ def get_minimal_card(hand: list, trump_mark: str = None) -> str:
         if trump_mark and trump_mark in card:
             continue
         new_hand.append(card)
-    new_hand = sorted_cards(new_hand)
+    if new_hand:
+        new_hand = sorted_cards(new_hand)
+    else:
+        new_hand = sorted_cards(hand)
     return new_hand[0]
 
 
 def sorted_cards(unsorted: list) -> list:
+    """Отсортировать карты по номиналу."""
     weights = []
     for card in unsorted:
         weights.append(

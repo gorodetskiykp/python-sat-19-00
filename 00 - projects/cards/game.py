@@ -1,3 +1,5 @@
+"""Основной модуль игры."""
+
 from random import randint
 
 from cards import (
@@ -11,20 +13,24 @@ from cards import (
 from players import defence, first_move, get_next_player, get_players, move
 
 
-def view_cards(players):
-    """
-    Вход:
-    [
-        ['player1', [карты на руках]],
-        ['player2', [карты на руках]],
-    ]
-    Вывести на экран красиво
+def view_cards(players) -> None:
+    """Напечатать карты игроков (вывести на экран красиво).
+
+    Args:
+        players: список игроков
+            [
+                ['player1', [карты на руках]],
+                ['player2', [карты на руках]],
+            ]
+    Returns:
+        None
     """
     for player, player_cards in players:
         print(player, '-', *sorted_cards(player_cards))
 
 
 def game():
+    """Играть в карты."""
     while True:
         players_count = input('Сколько будет игроков? ')
         if (players_count.isdigit()
@@ -46,13 +52,12 @@ def game():
     defender_index = get_next_player(next_move, players_count)
     print('Защищается', players[defender_index][0])
     next_card_to_defend = defence(players[defender_index][-1], next_card, trump)
-    
     if next_card_to_defend is not None:
-        print('Игрок', players[next_move][0], 'отбивает картой:', next_card_to_defend)
-        card_on_desk = move(players[next_move][-1], next_card_to_defend)
+        print('Игрок', players[defender_index][0], 'отбивает картой:', next_card_to_defend)
+        card_on_desk = move(players[defender_index][-1], next_card_to_defend)
         print('Карта на столе:', card_on_desk)
     else:
-        print('Игрок', players[next_move][0], 'не может отбить карту')
+        print('Игрок', players[defender_index][0], 'не может отбить карту')
     
 
     view_cards(players)
