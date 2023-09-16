@@ -54,13 +54,12 @@ def game():
     defender_index = get_next_player(next_move, players_count)
     print('Защищается', players[defender_index][0])
     next_card_to_defend = defence(players[defender_index][-1], next_card, trump)
-    
     if next_card_to_defend is not None:
-        print('Игрок', players[next_move][0], 'отбивает картой:', next_card_to_defend)
-        card_on_desk = move(players[next_move][-1], next_card_to_defend)
+        print('Игрок', players[defender_index][0], 'отбивает картой:', next_card_to_defend)
+        card_on_desk = move(players[defender_index][-1], next_card_to_defend)
         print('Карта на столе:', card_on_desk)
     else:
-        print('Игрок', players[next_move][0], 'не может отбить карту')
+        print('Игрок', players[defender_index][0], 'не может отбить карту')
     
 
     view_cards(players)
