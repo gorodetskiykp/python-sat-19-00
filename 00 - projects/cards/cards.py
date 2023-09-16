@@ -1,4 +1,5 @@
 from random import choice, randint, shuffle
+from typing import Optional
 
 from config import cards, CARDS_LIMIT, marks
 
@@ -60,14 +61,17 @@ def get_trump_card(stack: list):
     return None
 
 
-def get_minimal_card(hand: list, trump_mark: str = None) -> str:
-    """Определить минимальную не козырную карту у игрока.
+def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
+    """Определить минимальную карту у игрока.
+    Сначала смотрим не козырные карты, если таких нет -
+    отдаём минимальный козырь.
 
     Аргументы:
         hand - список карт у игрока
         trump_mark - строчное значение козырной масти
     Возвращаемое значение:
         Строчное значение карты
+        None
     """
     if not hand:
         return None
@@ -76,7 +80,10 @@ def get_minimal_card(hand: list, trump_mark: str = None) -> str:
         if trump_mark and trump_mark in card:
             continue
         new_hand.append(card)
-    new_hand = sorted_cards(new_hand)
+    if new_hand:
+        new_hand = sorted_cards(new_hand)
+    else:
+        new_hand = sorted_cards(hand)
     return new_hand[0]
 
 
