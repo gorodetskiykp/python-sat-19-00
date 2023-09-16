@@ -1,3 +1,5 @@
+"""Обработка колоды / карт."""
+
 from random import choice, randint, shuffle
 from typing import Optional
 
@@ -5,9 +7,7 @@ from config import cards, CARDS_LIMIT, marks
 
 
 def get_stack() -> list:
-    """
-    Вернуть перемешанную колоду
-    """
+    """Вернуть перемешанную колоду."""
     stack = []
     for card in cards:
         for mark in marks:
@@ -17,10 +17,7 @@ def get_stack() -> list:
 
 
 def get_random_cards(stack: list, count: int) -> list:
-    """
-    Принимает оставшуюся колоду
-    Возвращает указанное количество карт
-    """
+    """Вернуть указанное количество карт из колоды."""
     hand = []
     for _ in range(count):
         card = choice(stack)
@@ -30,7 +27,8 @@ def get_random_cards(stack: list, count: int) -> list:
 
 
 def get_cards_for_players(stack: list, players: list) -> list:
-    """
+    """Раздать карты игрокам.
+
     Получает список имен игроков
     Возвращает список списков (по 6 карт)
     [
@@ -46,8 +44,9 @@ def get_cards_for_players(stack: list, players: list) -> list:
     return hands_list
 
 
-def get_trump_card(stack: list):
+def get_trump_card(stack: list) -> Optional[str]:
     """Определить козырь.
+
     Козырь определяется по последней карте в колоде
     В случае пустой колоды - None
     Пример карты - 2♥
@@ -88,6 +87,7 @@ def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
 
 
 def sorted_cards(unsorted: list) -> list:
+    """Отсортировать карты по номиналу."""
     weights = []
     for card in unsorted:
         weights.append(
