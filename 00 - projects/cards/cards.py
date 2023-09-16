@@ -1,6 +1,6 @@
 """Обработка колоды / карт."""
 
-from random import choice, randint, shuffle
+from random import choice, shuffle
 from typing import Optional
 
 from config import cards, CARDS_LIMIT, marks
@@ -63,6 +63,7 @@ def get_trump_card(stack: list, players: list) -> str:
 
 def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
     """Определить минимальную карту у игрока.
+
     Сначала смотрим не козырные карты, если таких нет -
     отдаём минимальный козырь.
 
@@ -88,13 +89,21 @@ def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
 
 
 def sorted_cards(unsorted: list) -> list:
-    """Отсортировать карты по номиналу."""
+    """Отсортировать карты по номиналу.
+
+    Args:
+        unsorted: list
+            список карт, которые нужно отсортировать
+
+    Returns:
+        - Список отсортированных карт
+    """
     weights = []
-    for card in unsorted:
+    for unsorted_card in unsorted:
         weights.append(
             (
-                cards.index(card[:-1]),
-                card,
-            )
+                cards.index(unsorted_card[:-1]),
+                unsorted_card,
+            ),
         )
     return [card for _, card in sorted(weights)]
