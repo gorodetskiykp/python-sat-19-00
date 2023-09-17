@@ -41,7 +41,7 @@ def game():
     players = get_players(players_count)
     stack = get_stack()
     players = get_cards_for_players(stack, players)
-    trump = get_trump_card(stack)
+    trump = get_trump_card(stack, players)
     view_cards(players)
     print('Козырь: {}'.format(trump))
     next_move = first_move(players, trump)
@@ -51,12 +51,10 @@ def game():
     print('Карта на столе: {}'.format(card_on_desk))
     defender_index = get_next_player(next_move, players_count)
     print('Защищается {}'.format(players[defender_index][0]))
-    next_card_to_defend = defence(players[defender_index][-1], next_card, trump)
-    if next_card_to_defend is not None:
-        print('Игрок {} отбивает картой: {}'.foramt(players[defender_index][0],
-                                                    next_card_to_defend))
-        card_on_desk = move(players[defender_index][-1], next_card_to_defend)
-        print('Карта на столе: {}'.format(card_on_desk))
+    cards_to_defend = defence(players[defender_index][-1], [next_card], trump)
+    if cards_to_defend is not None:
+        print('Игрок {} отбивает: {}'.format(players[defender_index][0],
+                                             cards_to_defend))
     else:
         print('Игрок {} не может отбить карту'
               .format(players[defender_index][0]))

@@ -71,32 +71,47 @@ def move(hand: list, card: str):
     return card
 
 
-def defence(hand: list, attacking_card: str, trump_suit: str) -> Optional[str]:
+def defence(hand: list, attacking_cards: list,
+            trump_suit: str) -> Optional[dict]:
     """Определить карту для защиты.
+
+    Если на столе несколько карт - нужно найти, чем отбить их все.
 
     Args:
         hand: list
             список карт на руках у защищающегося игрока.
-        attacking_card: str
-            карта на столе, которую нужно отбить.
+        attacking_cards: list
+            карты на столе, которые нужно отбить.
         trump_suit: str
             козырная масть.
     Returns:
-        - Карту, которой можно отбить
+        - Карты, которыми можно отбить
         - None, если отбить нечем
     """
-    same_suit_cards = []
     trump_cards = []
-
+    defence_cards = {}
     for hand_card in hand:
-        if attacking_card[-1] in hand_card:
-            same_suit_cards.append(hand_card)
-        elif trump_suit in hand_card:
+        if trump_suit in hand_card:
             trump_cards.append(hand_card)
-    for defence_card in sorted_cards(same_suit_cards):
-        if cards.index(defence_card[0]) > cards.index(attacking_card[0]):
-            return defence_card
-    if trump_cards:
-        return min(trump_cards)
-    hand.append(attacking_card)
-    return None
+    for attacking_card in attacking_cards:
+        same_suit_cards = []
+        for hand_card in hand:
+            if (hand_card not in defence_cards.values()
+                    and attacking_card[-1] in hand_card):
+                same_suit_cards.append(hand_card)
+        for defence_card in sorted_cards(same_suit_cards):
+            if (cards.index(defence_card[:-1])
+                    > cards.index(attacking_card[:-1])):
+                defence_cards[attacking_card] = defence_card
+                break
+        else:
+            defence_card = get_minimal_card(trump_cards)
+            if defence_card:
+                defence_cards[attacking_card] = defence_card
+                trump_cards.remove(defence_card)
+            else:
+                hand.extend(attacking_cards)
+                return None
+    for card in defence_cards.values():
+        move(hand, card)
+    return defence_cards
