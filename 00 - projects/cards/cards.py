@@ -107,3 +107,75 @@ def sorted_cards(unsorted: list) -> list:
             ),
         )
     return [card for _, card in sorted(weights)]
+
+
+def get_minimal_similar_cards(hand, tramp, stack):
+    similar_cards = dict.fromkeys(cards)
+    hand_cards = hand[:]
+    if stack:
+        hand_cards = [card for card in hand_cards if tramp not in card]
+    for card in hand_cards:
+        value = card[:-1]
+        if similar_cards[value]:
+            similar_cards[value].append(card)
+        else:
+            similar_cards[value] = [card]
+    similar_cards = {value: cards for value, cards in similar_cards.items()
+                     if cards and len(cards) > 1}
+    result = []
+    for value in cards:
+        if len(similar_cards.get(value, [])) == 2:
+            result.append(similar_cards.get(value))
+            break
+    for value in cards:
+        if len(similar_cards.get(value, [])) == 3:
+            result.append(similar_cards.get(value))
+            break
+    return result
+
+
+def choose_attacking_cards(hand: list, trump: str, stack: list,
+                           table_cards: dict = None) -> list:
+    # Аргументы:
+    #
+    # карты ну руке атакующего
+    # козырь
+    # карты на столе (необязательный)
+    # stack
+    # Когда карт на столе нет:
+    #
+    # сначала ищем карту с помощью get_minimal_card
+    # потом ищем пары/тройки одинаковых карт (без козыря) - оформить в отдельную функцию
+    # из этих вариантов ходим рандомом [[7], [9, 9], [8, 8, 8]]
+    # Если карты на столе есть:
+    #
+    # выкидываем все карты на стол (кроме козырей), которые подходят по номиналам
+    #
+    # Если колода пустая
+    #
+    # не смотрим на козыри - если есть что выкинуть - выкидываем
+    # !!! Если атаковал, то внутри функции нужно удалить карты из hand (с помощью move())
+    attacking_cards = []
+
+    if not table_cards:
+        # пока убрать return - нам нужно карты из choice удалить из руки
+        return choice([
+            [get_minimal_card(hand, trump)],
+            *get_pairs_or_threes(hand)
+        ])
+
+    # list(a.keys()) + list(a.values())
+    # взять из всех значений только номиналы
+    # список значений - удалить дубликаты = table_cards
+    #
+    #
+    #
+    for card in table_cards:
+        if card[-1] != trump:  # это лишнее - нам все равно, что на столе лежит козырь
+            matching_cards = []
+            for current_card in hand:  # если стэк не пустой козыри не отдавать
+                if current_card[:-1] == card[:-1]:
+                    matching_cards.append(current_card)
+            attacking_cards.extend(matching_cards)
+
+    return attacking_cards

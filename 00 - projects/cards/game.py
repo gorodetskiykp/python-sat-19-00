@@ -64,40 +64,5 @@ def game():
     view_cards(players)
 
 
-def choose_attacking_cards(hand, trump, table_cards=None):
-    attacking_cards = []
-
-    if not table_cards:
-        minimal_card = get_minimal_card(hand, trump)
-        attacking_cards.append(minimal_card)
-
-        def find_pairs_or_threes(hand, count):
-            pairs_or_threes = []
-            uniq_cards = set(hand)
-            for current_card in uniq_cards:
-                if hand.count(current_card) >= count and current_card != trump:
-                    pairs_or_threes.extend([current_card] * count)
-            return pairs_or_threes
-
-        pairs_or_threes = find_pairs_or_threes(hand, 2)
-        if pairs_or_threes:
-            attacking_cards.append(pairs_or_threes)
-
-        threes = find_pairs_or_threes(hand, 3)
-        if threes:
-            attacking_cards.append(threes)
-    else:
-        for card in table_cards:
-            if card[0] != trump[0]:
-                matching_cards = []
-                for current_card in hand:
-                    if current_card[0] == card[0]:
-                        matching_cards.append(current_card)
-                attacking_cards.extend(matching_cards)
-
-    return attacking_cards
-
-
-
 if __name__ == '__main__':
     game()
