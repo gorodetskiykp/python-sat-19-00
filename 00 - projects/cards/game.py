@@ -3,14 +3,17 @@
 from random import randint
 
 from cards import (
+    choose_attacking_cards,
+    defence,
     get_cards_for_players,
     get_minimal_card,
     get_stack,
     get_trump_card,
+    move,
     sorted_cards,
 )
 
-from players import defence, first_move, get_next_player, get_players, move
+from players import first_move, get_next_player, get_players
 
 
 def view_cards(players) -> None:
@@ -46,15 +49,20 @@ def game():
     print('Козырь: {}'.format(trump))
     next_move = first_move(players, trump)
     print('Игру начинает {}'.format(players[next_move][0]))
-    next_card = get_minimal_card(players[next_move][-1], trump)
-    card_on_desk = move(players[next_move][-1], next_card)
-    print('Карта на столе: {}'.format(card_on_desk))
+    cards_on_desk = choose_attacking_cards(players[next_move][-1], trump, stack)
+    print('Карты на столе: {}'.format(', '.join(cards_on_desk)))
     defender_index = get_next_player(next_move, players_count)
     print('Защищается {}'.format(players[defender_index][0]))
-    cards_to_defend = defence(players[defender_index][-1], [next_card], trump)
+    cards_to_defend = defence(players[defender_index][-1], cards_on_desk, trump)
+    # если атакующих карт больше, чем карт на руке
+    # и смог потратить все свои карты
+    # вернуть какой-то признак, чтобы атакующий забрал свои небитые карты
     if cards_to_defend is not None:
         print('Игрок {} отбивает: {}'.format(players[defender_index][0],
                                              cards_to_defend))
+        cards_on_desk = choose_attacking_cards(players[next_move][-1], trump,
+                                               stack, cards_to_defend)
+        print(cards_on_desk)
     else:
         print('Игрок {} не может отбить карту'
               .format(players[defender_index][0]))
