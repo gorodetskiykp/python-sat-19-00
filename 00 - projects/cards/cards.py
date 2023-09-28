@@ -144,38 +144,97 @@ def choose_attacking_cards(hand: list, trump: str, stack: list,
     # stack
     # Когда карт на столе нет:
     #
-    # сначала ищем карту с помощью get_minimal_card
-    # потом ищем пары/тройки одинаковых карт (без козыря) - оформить в отдельную функцию
-    # из этих вариантов ходим рандомом [[7], [9, 9], [8, 8, 8]]
-    # Если карты на столе есть:
-    #
-    # выкидываем все карты на стол (кроме козырей), которые подходят по номиналам
-    #
-    # Если колода пустая
-    #
-    # не смотрим на козыри - если есть что выкинуть - выкидываем
-    # !!! Если атаковал, то внутри функции нужно удалить карты из hand (с помощью move())
+
     attacking_cards = []
 
     if not table_cards:
-        # пока убрать return - нам нужно карты из choice удалить из руки
-        return choice([
+        to_table = choice([
             [get_minimal_card(hand, trump)],
-            *get_pairs_or_threes(hand)
+            *get_minimal_similar_cards(hand, trump, stack)
         ])
+        for card in to_table:
+            move(hand, card)
+        return to_table
 
-    # list(a.keys()) + list(a.values())
-    # взять из всех значений только номиналы
-    # список значений - удалить дубликаты = table_cards
-    #
-    #
-    #
-    for card in table_cards:
-        if card[-1] != trump:  # это лишнее - нам все равно, что на столе лежит козырь
-            matching_cards = []
-            for current_card in hand:  # если стэк не пустой козыри не отдавать
-                if current_card[:-1] == card[:-1]:
-                    matching_cards.append(current_card)
-            attacking_cards.extend(matching_cards)
-
+    table_cards_list = list(table_cards.keys()) + list(table_cards.values())
+    table_cards_list = set([card[:-1] for card in table_cards_list])
+    print(table_cards_list)
+    for card_value in table_cards_list:
+        matching_cards = []
+        for hand_card in hand:
+            if card_value in hand_card:
+                if stack and trump in hand_card:
+                    continue
+                matching_cards.append(hand_card)
+        attacking_cards.extend(matching_cards)
+    print(attacking_cards)
+    # !!! Если атаковал, то внутри функции нужно удалить карты из hand (с помощью move())
     return attacking_cards
+
+
+def move(hand: list, card: str):
+    """Убрать карту из карт игрока.
+
+    Аргументы:
+        hand - список карт у игрока
+        card - строчное значение карты, которую нужно выложить на стол
+    Возвращаемое значение:
+        Строчное значение карты
+    """
+    hand.remove(card)
+    return card
+
+
+def defence(hand: list, attacking_cards: list,
+            trump_suit: str) -> Optional[dict]:
+    """Определить карту для защиты.
+
+    Если на столе несколько карт - нужно найти, чем отбить их все.
+
+    Args:
+        hand: list
+            список карт на руках у защищающегося игрока.
+        attacking_cards: list
+            карты на столе, которые нужно отбить.
+        trump_suit: str
+            козырная масть.
+    Returns:
+        - Карты, которыми можно отбить
+        - None, если отбить нечем
+    """
+    # если атакующих карт больше, чем карт на руке
+    # и смог потратить все свои карты
+    # вернуть какой-то признак, чтобы атакующий забрал свои небитые карты
+
+    #!!! переделать алгоритм поиска карты, которую нужно отбить,
+    # если атакующих карт больше, чем карт на руке
+
+    #!!! Если не смогли отбить, нужно взять только такое количество атакующих карт,
+    # сколько карт на руке (самые маленькие)
+    trump_cards = []
+    defence_cards = {}
+    for hand_card in hand:
+        if trump_suit in hand_card:
+            trump_cards.append(hand_card)
+    for attacking_card in attacking_cards:
+        same_suit_cards = []
+        for hand_card in hand:
+            if (hand_card not in defence_cards.values()
+                    and attacking_card[-1] in hand_card):
+                same_suit_cards.append(hand_card)
+        for defence_card in sorted_cards(same_suit_cards):
+            if (cards.index(defence_card[:-1])
+                    > cards.index(attacking_card[:-1])):
+                defence_cards[attacking_card] = defence_card
+                break
+        else:
+            defence_card = get_minimal_card(trump_cards)
+            if defence_card:
+                defence_cards[attacking_card] = defence_card
+                trump_cards.remove(defence_card)
+            else:
+                hand.extend(attacking_cards)
+                return None
+    for card in defence_cards.values():
+        move(hand, card)
+    return defence_cards
