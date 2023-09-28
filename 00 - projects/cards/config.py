@@ -3,4 +3,4 @@ marks = ['♥', '♦', '♣', '♠']
 
 black_list = ['Oksana', 'Tanya', 'Max']
 
-CARDS_LIMIT = 20
+CARDS_LIMIT = 6
