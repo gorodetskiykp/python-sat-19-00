@@ -135,7 +135,7 @@ def get_minimal_similar_cards(hand, tramp, stack):
 
 
 def choose_attacking_cards(hand: list, trump: str, stack: list,
-                           table_cards: dict = None) -> list:
+                           table_cards: dict = None) -> dict:
     # Аргументы:
     #
     # карты ну руке атакующего
@@ -148,13 +148,13 @@ def choose_attacking_cards(hand: list, trump: str, stack: list,
     attacking_cards = []
 
     if not table_cards:
-        to_table = choice([
+        attacking_cards = choice([
             [get_minimal_card(hand, trump)],
             *get_minimal_similar_cards(hand, trump, stack)
         ])
-        for card in to_table:
+        for card in attacking_cards:
             move(hand, card)
-        return to_table
+        return dict.fromkeys(attacking_cards)
 
     table_cards_list = list(table_cards.keys()) + list(table_cards.values())
     table_cards_list = set([card[:-1] for card in table_cards_list])
@@ -167,9 +167,10 @@ def choose_attacking_cards(hand: list, trump: str, stack: list,
                     continue
                 matching_cards.append(hand_card)
         attacking_cards.extend(matching_cards)
-    print(attacking_cards)
-    # !!! Если атаковал, то внутри функции нужно удалить карты из hand (с помощью move())
-    return attacking_cards
+    for card in attacking_cards:
+        move(hand, card)
+    table_cards.update(dict.fromkeys(attacking_cards))
+    return table_cards
 
 
 def move(hand: list, card: str):
@@ -185,7 +186,7 @@ def move(hand: list, card: str):
     return card
 
 
-def defence(hand: list, attacking_cards: list,
+def defence(hand: list, attacking_cards: dict,
             trump_suit: str) -> Optional[dict]:
     """Определить карту для защиты.
 
@@ -194,8 +195,9 @@ def defence(hand: list, attacking_cards: list,
     Args:
         hand: list
             список карт на руках у защищающегося игрока.
-        attacking_cards: list
+        attacking_cards: dict
             карты на столе, которые нужно отбить.
+            это словарь, если есть значение, значит карта уже была отбита.
         trump_suit: str
             козырная масть.
     Returns:
@@ -216,7 +218,10 @@ def defence(hand: list, attacking_cards: list,
     for hand_card in hand:
         if trump_suit in hand_card:
             trump_cards.append(hand_card)
-    for attacking_card in attacking_cards:
+    attacking_cards_list = [attacking_card
+                            for attacking_card, defending_card
+                            in attacking_cards.items() if not defending_card]
+    for attacking_card in attacking_cards_list:
         same_suit_cards = []
         for hand_card in hand:
             if (hand_card not in defence_cards.values()
