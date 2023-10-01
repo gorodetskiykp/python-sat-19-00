@@ -136,7 +136,14 @@ def get_minimal_similar_cards(hand, tramp, stack):
 
 def choose_attacking_cards(hand: list, trump: str, stack: list,
                            table_cards: dict = None) -> dict:
-    """Вернуть на стол карты для атаки."""
+    """Вернуть на стол карты для атаки.
+
+    Args:
+        hand: list
+        trump: str
+        stack: list
+        table_cards: dict = None
+    """
     # Аргументы:
     #
     # карты ну руке атакующего
