@@ -143,16 +143,9 @@ def choose_attacking_cards(hand: list, trump: str, stack: list,
         trump: str
         stack: list
         table_cards: dict = None
+    Returns:
+        table_cards: dict
     """
-    # Аргументы:
-    #
-    # карты ну руке атакующего
-    # козырь
-    # карты на столе (необязательный)
-    # stack
-    # Когда карт на столе нет:
-    #
-
     attacking_cards = []
 
     if not table_cards:
