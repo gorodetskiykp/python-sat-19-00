@@ -68,7 +68,8 @@ def game():
               .format(players[defender_index][0]))
 
     view_cards(players)
-
+    players = get_cards_for_players(stack, players)     
+    view_cards(players)
 
 if __name__ == '__main__':
     game()
