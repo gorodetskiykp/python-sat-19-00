@@ -61,6 +61,18 @@ def get_trump_card(stack: list, players: list) -> str:
     return players[-1][-1][-1][-1]
 
 
+def get_card_mark(card: str) -> str:
+    """Получить масть карты
+
+    Аргументы:
+        card - строчное значение карты
+
+    Возвращаемое значение:
+        Строчное значение масти
+    """
+    return card[-1]
+
+
 def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
     """Определить минимальную карту у игрока.
 
@@ -226,7 +238,7 @@ def defence(hand: list, attacking_cards: dict,
         same_suit_cards = []
         for hand_card in hand:
             if (hand_card not in defence_cards.values()
-                    and attacking_card[-1] in hand_card):
+                    and get_card_mark(attacking_card) in hand_card):
                 same_suit_cards.append(hand_card)
         for defence_card in sorted_cards(same_suit_cards):
             if (cards.index(defence_card[:-1])
