@@ -4,3 +4,6 @@ marks = ['♥', '♦', '♣', '♠']
 black_list = ['Oksana', 'Tanya', 'Max']
 
 CARDS_LIMIT = 6
+
+min_count_of_players = 2
+max_count_of_players = 4

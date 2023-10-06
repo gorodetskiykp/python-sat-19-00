@@ -12,6 +12,7 @@ from cards import (
     move,
     sorted_cards,
 )
+from config import max_count_of_players, min_count_of_players
 
 from players import first_move, get_next_player, get_players
 
@@ -37,7 +38,8 @@ def game():
     while True:
         players_count = input('Сколько будет игроков? ')
         if (players_count.isdigit()
-                and 2 <= (players_count := int(players_count)) <= 4):
+                and min_count_of_players <=
+                (players_count := int(players_count)) <= max_count_of_players):
             break
         print('Может быть только от 2 до 4 игроков')
 
