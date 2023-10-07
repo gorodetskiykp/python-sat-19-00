@@ -159,7 +159,6 @@ def choose_attacking_cards(hand: list, trump: str, stack: list,
 
     table_cards_list = list(table_cards.keys()) + list(table_cards.values())
     table_cards_list = set([card[:-1] for card in table_cards_list])
-    print(table_cards_list)
     for card_value in table_cards_list:
         matching_cards = []
         for hand_card in hand:
