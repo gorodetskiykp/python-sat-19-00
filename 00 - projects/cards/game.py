@@ -1,7 +1,5 @@
 """Основной модуль игры."""
 
-from random import randint
-
 from cards import (
     choose_attacking_cards,
     defence,
@@ -13,8 +11,16 @@ from cards import (
     sorted_cards,
 )
 
-from players import first_move, get_next_player, get_players
+from config import min_count_of_players, max_count_of_players
 
+from players import (
+    first_move,
+    get_next_player,
+    get_players,
+    random_players
+)
+
+from random import randint
 
 def view_cards(players) -> None:
     """Напечатать карты игроков (вывести на экран красиво).
@@ -33,15 +39,11 @@ def view_cards(players) -> None:
 
 
 def game():
-    """Играть в карты."""
-    while True:
-        players_count = input('Сколько будет игроков? ')
-        if (players_count.isdigit()
-                and 2 <= (players_count := int(players_count)) <= 4):
-            break
-        print('Может быть только от 2 до 4 игроков')
+    """Играть в карты.
+    Определить количество игроков, взяв случайное значение от 2 до 4."""
+    players_count = randint(min_count_of_players, max_count_of_players)
 
-    players = get_players(players_count)
+    players = random_players(players_count)
     stack = get_stack()
     players = get_cards_for_players(stack, players)
     trump = get_trump_card(stack, players)
