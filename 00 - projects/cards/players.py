@@ -2,8 +2,12 @@
 
 from typing import Optional
 
-from config import black_list, cards
+import random
+
 from cards import get_minimal_card, sorted_cards
+
+from config import black_list, cards, names
+
 
 
 def get_players(players_count: int) -> list:
@@ -21,6 +25,16 @@ def get_players(players_count: int) -> list:
             players.append([name, []])
             players_names.append(name)
     return players
+
+
+def random_players(players_count: int) -> list:
+    """Взять случайные имена игроков из заготовленного списка.
+    Аргументы:
+        players_count - количество игроков
+    Возвращаемое значение:
+        Имена игроков
+        """
+    return random.sample(names, players_count)
 
 
 def first_move(players: list, trump_mark: str) -> int:
