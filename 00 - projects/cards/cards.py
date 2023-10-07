@@ -244,3 +244,21 @@ def defence(hand: list, attacking_cards: dict,
     for card in defence_cards.values():
         move(hand, card)
     return defence_cards
+
+
+def trump_mark_card_filter(hand: list, trump_mark: str) -> list:
+    """Отсортировать карты, отделить козырные от некозырных.
+
+    Аргументы:
+        hand - список карт у игрока
+        trump_mark - строчное значение козырной масти
+    Возвращаемое значение:
+        два списка - козыри и не козыри
+    """
+    filtered_cards = [[], []]
+    for card in hand:
+        if trump_mark in card:
+            filtered_cards[0].append(card)
+        else:
+            filtered_cards[1].append(card)
+    return filtered_cards
