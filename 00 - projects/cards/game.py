@@ -34,14 +34,19 @@ def view_cards(players) -> None:
 
 def game():
     """Играть в карты."""
-    while True:
-        players_count = input('Сколько будет игроков? ')
-        if (players_count.isdigit()
-                and 2 <= (players_count := int(players_count)) <= 4):
-            break
-        print('Может быть только от 2 до 4 игроков')
-
-    players = get_players(players_count)
+    # while True:
+    #     players_count = input('Сколько будет игроков? ')
+    #     if (players_count.isdigit()
+    #             and 2 <= (players_count := int(players_count)) <= 4):
+    #         break
+    #     print('Может быть только от 2 до 4 игроков')
+    #
+    # players = get_players(players_count)
+    players_count = 2
+    players = [
+        ["Player1", []],
+        ["Player2", []],
+    ]
     stack = get_stack()
     players = get_cards_for_players(stack, players)
     trump = get_trump_card(stack, players)
