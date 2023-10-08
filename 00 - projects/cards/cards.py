@@ -289,3 +289,8 @@ def defence(hand: list, cards_on_desk: dict,
     for card in cards_on_desk.values():
         move(hand, card)
     return cards_on_desk
+
+
+def allocate_cards(cards: list) -> dict:
+    allocated_cards = {}
+    return allocated_cards
