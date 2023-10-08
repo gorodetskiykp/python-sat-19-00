@@ -170,7 +170,6 @@ def choose_attacking_cards(hand: list, trump: str, stack: list,
 
     table_cards_list = list(table_cards.keys()) + list(table_cards.values())
     table_cards_list = set([get_card_value(card) for card in table_cards_list])
-    print(table_cards_list)
     for card_value in table_cards_list:
         matching_cards = []
         for hand_card in hand:
@@ -250,8 +249,8 @@ def defence(hand: list, attacking_cards: dict,
                 defence_cards[attacking_card] = defence_card
                 trump_cards.remove(defence_card)
             else:
-                hand.extend(attacking_cards)
+                hand.extend(attacking_cards.keys())
                 return None
     for card in defence_cards.values():
         move(hand, card)
-    return defence_cards
+    return defence_cards  # TODO нужно возвращать все карты со стола

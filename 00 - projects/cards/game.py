@@ -49,6 +49,7 @@ def game():
     print('Козырь: {}'.format(trump))
     next_move = first_move(players, trump)
     print('Игру начинает {}'.format(players[next_move][0]))
+
     cards_on_desk = choose_attacking_cards(players[next_move][-1], trump, stack)
     print('Карты на столе: {}'.format(', '.join(cards_on_desk)))
     defender_index = get_next_player(next_move, players_count)
@@ -62,7 +63,7 @@ def game():
                                              cards_to_defend))
         cards_on_desk = choose_attacking_cards(players[next_move][-1], trump,
                                                stack, cards_to_defend)
-        print(cards_on_desk)
+        print("Карты  после второй атаки: {}".format(cards_on_desk))
     else:
         print('Игрок {} не может отбить карту'
               .format(players[defender_index][0]))
@@ -70,6 +71,8 @@ def game():
     view_cards(players)
     players = get_cards_for_players(stack, players)     
     view_cards(players)
+
+
 
 if __name__ == '__main__':
     game()
