@@ -61,6 +61,17 @@ def get_trump_card(stack: list, players: list) -> str:
     return players[-1][-1][-1][-1]
 
 
+def get_card_value(card: str) -> str:
+    """Получить номинал карты
+
+    Аргументы:
+        card - строчное значение карты
+
+    Возвращаемое значение:
+        Строчное значение номинала
+    """
+    return card[:-1]
+
 def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
     """Определить минимальную карту у игрока.
 
@@ -102,7 +113,7 @@ def sorted_cards(unsorted: list) -> list:
     for unsorted_card in unsorted:
         weights.append(
             (
-                cards.index(unsorted_card[:-1]),
+                cards.index(get_card_value(unsorted_card)),
                 unsorted_card,
             ),
         )
@@ -115,7 +126,7 @@ def get_minimal_similar_cards(hand, tramp, stack):
     if stack:
         hand_cards = [card for card in hand_cards if tramp not in card]
     for card in hand_cards:
-        value = card[:-1]
+        value = get_card_value(card)
         if similar_cards[value]:
             similar_cards[value].append(card)
         else:
@@ -158,7 +169,7 @@ def choose_attacking_cards(hand: list, trump: str, stack: list,
         return dict.fromkeys(attacking_cards)
 
     table_cards_list = list(table_cards.keys()) + list(table_cards.values())
-    table_cards_list = set([card[:-1] for card in table_cards_list])
+    table_cards_list = set([get_card_value(card) for card in table_cards_list])
     for card_value in table_cards_list:
         matching_cards = []
         for hand_card in hand:
@@ -225,11 +236,11 @@ def defence(hand: list, attacking_cards: dict,
         same_suit_cards = []
         for hand_card in hand:
             if (hand_card not in defence_cards.values()
-                    and attacking_card[-1] in hand_card):
+                    and get_card_value(attacking_card) in hand_card):
                 same_suit_cards.append(hand_card)
         for defence_card in sorted_cards(same_suit_cards):
-            if (cards.index(defence_card[:-1])
-                    > cards.index(attacking_card[:-1])):
+            if (cards.index(get_card_value(defence_card))
+                    > cards.index(get_card_value(attacking_card))):
                 defence_cards[attacking_card] = defence_card
                 break
         else:
