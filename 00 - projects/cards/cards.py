@@ -72,6 +72,7 @@ def get_card_value(card: str) -> str:
     """
     return card[:-1]
 
+
 def get_minimal_card(hand: list, trump_mark: str = None) -> Optional[str]:
     """Определить минимальную карту у игрока.
 
@@ -215,6 +216,7 @@ def find_defence_card_by_values(defence_cards: list,
             return defence_card
     return None
 
+
 def defence(hand: list, cards_on_desk: dict,
             trump_suit: str) -> Optional[dict]:
     """Определить карту для защиты.
@@ -239,10 +241,10 @@ def defence(hand: list, cards_on_desk: dict,
     # и смог потратить все свои карты
     # вернуть какой-то признак, чтобы атакующий забрал свои небитые карты
 
-    #!!! переделать алгоритм поиска карты, которую нужно отбить,
+    # !!! переделать алгоритм поиска карты, которую нужно отбить,
     # если атакующих карт больше, чем карт на руке
 
-    #!!! Если не смогли отбить, нужно взять только такое количество атакующих карт,
+    # !!! Если не смогли отбить, нужно взять только такое количество атакующих карт,
     # сколько карт на руке (самые маленькие)
     trump_cards = []
     defence_cards = {}
@@ -292,5 +294,19 @@ def defence(hand: list, cards_on_desk: dict,
 
 
 def allocate_cards(cards: list) -> dict:
-    allocated_cards = {}
+    allocated_cards = {'♥': [],
+                       '♦': [],
+                       '♣': [],
+                       '♠': [],
+                       }
+    # вызываем функцию для сортировки карт по номиналу
+    cards = sorted_cards(cards)
+    # во внешнем цикле перебираем масти
+    for mark in marks:
+        # во внутреннем цикле перебираем отсорированный список
+        for card in cards:
+            if card[-1] == mark:
+                # если масть карты свпадает с мастью внешнего цикла
+                # добавляем карту в словарь
+                allocated_cards[mark].append(card)
     return allocated_cards
