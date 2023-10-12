@@ -53,7 +53,5 @@ def first_move(players: list, trump_mark: str) -> int:
     return 0
 
 
-def get_next_player(current_player_index: int, players_count: int):
-    """Определить индекс следующего игрока."""
-    return (current_player_index + 1) % players_count
+
 
