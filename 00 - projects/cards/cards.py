@@ -26,27 +26,23 @@ def get_random_cards(stack: list, count: int) -> list:
     return hand
 
 
-def get_cards_for_players(stack: list, players: list) -> list:
-    """Раздать карты игрокам.
-
-    Получает список имен игроков
-    Возвращает список списков (по 6 карт)
-    [
-        ['player1', [карты на руках]],
-    ]
-    """
+def get_cards_for_players(stack: list, players: list, starting_player_index: int) -> list:
     hands_list = []
-    for name, player_cards in players:
+    for i, (name, player_cards) in enumerate(players):
         need_cards = max(0, CARDS_LIMIT - len(player_cards))
-        temporary = get_random_cards(stack, need_cards)
-        cards_for_player = [name, temporary + player_cards]
-        hands_list.append(cards_for_player)
+        if i >= starting_player_index:
+            temporary = get_random_cards(stack, need_cards)
+            cards_for_player = [name, temporary + player_cards]
+            hands_list.append(cards_for_player)
+        else:
+            cards_for_player = [name, player_cards]
+            hands_list.append(cards_for_player)
     return hands_list
 
 
 def get_trump_card(stack: list, players: list) -> str:
     """Определить козырь.
-
+ 
     Козырь определяется по последней карте в колоде
     В случае пустой колоды берем последнюю карту последнего игрока
     Пример масти - ♥
