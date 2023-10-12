@@ -215,6 +215,7 @@ def find_defence_card_by_values(defence_cards: list,
             return defence_card
     return None
 
+
 def defence(hand: list, cards_on_desk: dict,
             trump_suit: str) -> Optional[dict]:
     """Определить карту для защиты.
