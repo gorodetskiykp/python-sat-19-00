@@ -43,7 +43,7 @@ def game():
     Определить количество игроков, взяв случайное значение от 2 до 4."""
     players_count = randint(min_count_of_players, max_count_of_players)
 
-    players = random_players(players_count)
+    players = get_players(players_count)
     stack = get_stack()
     players = get_cards_for_players(stack, players)
     trump = get_trump_card(stack, players)

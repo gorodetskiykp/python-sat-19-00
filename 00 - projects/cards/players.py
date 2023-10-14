@@ -12,18 +12,20 @@ from config import black_list, cards, names
 
 def get_players(players_count: int) -> list:
     players = []
-    players_names = []
-    while len(players) < players_count:
-        name = input('Введите имя игрока: ').strip()
-        if len(name) < 3:
-            print('Имя должно содержать минимум 3 символа. Попробуйте ещё раз')
-        elif name in black_list:
-            print('Игрок в чёрном списке')
-        elif name in players_names:
-            print('Такой игрок уже есть')
-        else:
-            players.append([name, []])
-            players_names.append(name)
+    players_names = random_players(players_count)
+    if not players_names:
+        while len(players) < players_count:
+            name = input('Введите имя игрока: ').strip()
+            if len(name) < 3:
+                print('Имя должно содержать минимум 3 символа. Попробуйте ещё раз')
+            elif name in black_list:
+                print('Игрок в чёрном списке')
+            elif name in players_names:
+                print('Такой игрок уже есть')
+            else:
+                players_names.append(name)
+    for name in players_names:
+        players.append([name, []])
     return players
 
 
