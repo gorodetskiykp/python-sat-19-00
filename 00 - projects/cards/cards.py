@@ -78,14 +78,26 @@ def get_trump_card(stack: list, players: list) -> str:
     return players[-1][-1][-1][-1]
 
 
+def get_card_suite(card: str) -> str:
+    """Получить масть карты.
+    
+    Аргументы:
+        card - строчное значение карты
+
+    Возвращаемое значение:
+        Строчное значение масти
+    """
+    return card[-1]
+
+
 def get_card_value(card: str) -> str:
-    """Получить номинал карты
+    """Получить номинал карты.
 
     Аргументы:
         card - строчное значение карты
 
     Возвращаемое значение:
-        Строчное значение номинала
+        Строчное значение номинала  
     """
     return card[:-1]
 
@@ -285,8 +297,8 @@ def defence(hand: list, cards_on_desk: dict,
         # определение карт той же масти, что и атакующая карта
         same_suit_cards = []
         for hand_card in hand:
-            if (hand_card not in cards_on_desk.values()
-                    and attacking_card[-1] in hand_card):
+            if (hand_card not in defence_cards.values()
+                    and get_card_mark(attacking_card) in hand_card):
                 same_suit_cards.append(hand_card)
 
         # определение карты той же масти, что и атакующая карта,
