@@ -328,20 +328,14 @@ def defence(hand: list, cards_on_desk: dict,
     return cards_on_desk
 
 
-def allocate_cards(cards: list) -> dict:
-    allocated_cards = {'♥': [],
-                       '♦': [],
-                       '♣': [],
-                       '♠': [],
-                       }
+def allocate_cards(cards: list[str]) -> dict[str, str]:
+    allocated_cards = {mark:[] for mark in marks}
     # вызываем функцию для сортировки карт по номиналу
     cards = sorted_cards(cards)
-    # во внешнем цикле перебираем масти
-    for mark in marks:
-        # во внутреннем цикле перебираем отсорированный список
-        for card in cards:
-            if card[-1] == mark:
-                # если масть карты свпадает с мастью внешнего цикла
-                # добавляем карту в словарь
-                allocated_cards[mark].append(card)
+    # В цикле перебираем карты
+    for card in cards:
+        # Вызываем функцию, возвращающую масть карты
+        suit = get_card_suite(card)
+        # Полученную масть используем как ключ, по ключу добавляем карту
+        allocated_cards[suit].append(card)
     return allocated_cards
