@@ -272,10 +272,10 @@ def defence(hand: list, cards_on_desk: dict,
     # и смог потратить все свои карты
     # вернуть какой-то признак, чтобы атакующий забрал свои небитые карты
 
-    #!!! переделать алгоритм поиска карты, которую нужно отбить,
+    # !!! переделать алгоритм поиска карты, которую нужно отбить,
     # если атакующих карт больше, чем карт на руке
 
-    #!!! Если не смогли отбить, нужно взять только такое количество атакующих карт,
+    # !!! Если не смогли отбить, нужно взять только такое количество атакующих карт,
     # сколько карт на руке (самые маленькие)
     trump_cards = []
     defence_cards = {}
@@ -326,3 +326,16 @@ def defence(hand: list, cards_on_desk: dict,
     for card in success_defending_cards:
         move(hand, card)
     return cards_on_desk
+
+
+def allocate_cards(cards: list[str]) -> dict[str, str]:
+    allocated_cards = {mark:[] for mark in marks}
+    # вызываем функцию для сортировки карт по номиналу
+    cards = sorted_cards(cards)
+    # В цикле перебираем карты
+    for card in cards:
+        # Вызываем функцию, возвращающую масть карты
+        suit = get_card_suite(card)
+        # Полученную масть используем как ключ, по ключу добавляем карту
+        allocated_cards[suit].append(card)
+    return allocated_cards
